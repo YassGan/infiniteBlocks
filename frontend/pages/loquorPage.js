@@ -9,20 +9,23 @@ import React, { useState } from 'react';
 const loquorPage = () => {
 
 
-    // Assuming you have a state for filters like this
     const [filters, setFilters] = useState([
-      { label: 'Genre 1', checked: false },
-      { label: 'Genre 2', checked: false },
-      // ... other filters
+      { label: 'Genre 1', checked: true },
+      { label: 'Genre 2', checked: true },
     ]);
   
     const handleFilterChange = (changedFilter, isChecked) => {
-      setFilters(
-        filters.map((filter) =>
-          filter.label === changedFilter.label ? { ...filter, checked: isChecked } : filter
-        )
-      );
+      setFilters(filters.map(filter => {
+        if (filter.label === changedFilter.label) {
+          return {
+            label: filter.label,
+            checked: isChecked, 
+          };
+        }
+        return filter;
+      }));
     };
+    
 
 
 
@@ -42,7 +45,7 @@ const loquorPage = () => {
 
             {/* Main Content Column */}
             <div className="w-full lg:w-3/4 px-2">
-              <LoquorElementsContainer />
+            <LoquorElementsContainer filters={filters.filter(filter => filter.checked)} />
             </div>
 
 

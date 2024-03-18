@@ -3,25 +3,28 @@
 import React, { useState } from "react";
 import LoquorElement from "../../components/loquorPageComponents/loquorElement";
 
-const LoquorElementsContainer = () => {
+const LoquorElementsContainer = ({ filters }) => {
   const trackList = [
     {
       number: "1",
       title: "Smart Contracts",
       duration: "2:34",
       imageUrl: "/images/loquorImages/1.jpeg",
+      genre: "Genre 1", // Propriété fictive ajoutée pour le filtrage
     },
     {
       number: "2",
       title: "Blockchain Governance",
       duration: "3:45",
       imageUrl: "/images/loquorImages/3.jpeg",
+      genre: "Genre 2",
     },
     {
       number: "3",
       title: "Cryptocurrency Regulation",
       duration: "4:56",
       imageUrl: "/images/loquorImages/2.jpg",
+      genre: "Genre 1",
     },
   ];
 
@@ -35,6 +38,13 @@ const LoquorElementsContainer = () => {
     setVisibleTracks(2);
   };
 
+
+    const filteredTracks = trackList.filter(track =>
+      filters.some(filter => filter.checked && filter.label === track.genre)
+    );
+
+
+
   return (
     <div className="pt-3 bg-[#181818] border border-gray-700 rounded-lg shadow-md ">
       <div className="px-8 py-4">
@@ -44,7 +54,7 @@ const LoquorElementsContainer = () => {
 
         <h2 className="text-xl font-bold mb-4 text-white">Popular</h2>
         <div>
-          {trackList.slice(0, visibleTracks).map((track) => (
+        {filteredTracks.slice(0, visibleTracks).map((track) => (
             <LoquorElement
               key={track.number}
               number={track.number}
